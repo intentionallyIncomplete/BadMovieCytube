@@ -388,7 +388,7 @@ var setImageSrc = function(imageData) {
 }
 
 // More DOM manipulation.
-// TODO - module this.
+// TODO - modulate this.
 $("#videowrap").addClass("vjs-theme-city");
 $(".server-msg-reconnect").addClass("fad fa-plug");
 $(".server-msg-reconnect").text("");
