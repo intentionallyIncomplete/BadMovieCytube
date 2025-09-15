@@ -7,17 +7,9 @@
 ////Lets initialize some shit////
 var VERSION = '2.3';
 
-var vplayer = videojs("ytapiplayer")
-function videofix(){
-var vplayer = videojs("ytapiplayer")
-vplayer.on('error', function(e){
-window.setTimeout(function(){
-    vplayer.createModal('reloading the player!');
-	refreshVideo();
-    console.log("reloading player");
-    }, 10000);
- });
-}
+// Import player management
+const playerManager = __webpack_require__('./src/player/playerManager.js');
+const vplayer = playerManager.initializePlayer();
 window.socket.on("changeMedia", function () {
 var myVideo = document.getElementById("ytapiplayer");
 if (myVideo.addEventListener) {
@@ -655,10 +647,6 @@ for (i=0;i<field.length;i++){
     scrollToBottom();
   });
 
-//lets disable this for now, youtube doenst like it
-//$("#ytapiplayer").attr("airplay","allow");
-//$("#ytapiplayer").attr("x-webkit-airplay","allow");
-//$("#ytapiplayer").attr("autoplay","true");
 $("#maincontain").addClass("Overlay-Scrollbars");
 $("#maincontain").addClass("leftcontent");
 $("#chatwrap").addClass("rightcontent");
