@@ -1,13 +1,16 @@
 **THEME 2 installation** 
 
-*** ``paste the contents of these scripts into your channel in this order. ``
-***https://raw.githubusercontent.com/BillTube/BillTube2/master/ChannelConfig.js into channel JS.
-paste the module loader after it also in your channel JS https://pastebin.com/raw/igcf8ZyZ 
-https://raw.githubusercontent.com/BillTube/BillTube2/master/CustomChannelCSS into channel CSS
+**Environment Setup**
+1. Copy `.env.example` to create your own `.env` file
+2. Edit the `.env` file with your configuration values
 
+**Installation Steps**
+1. Configure your environment variables in `.env`
+2. Add the module loader to your channel JS: https://pastebin.com/raw/igcf8ZyZ 
+3. Add the CustomChannelCSS to your channel CSS: https://raw.githubusercontent.com/BillTube/BillTube2/master/CustomChannelCSS
 
-**Read this when installing the script**
-You will have to edit your channel JS to fit your needs, everything should be self explanatory. 
+**Configuration Guide**
+The `.env` file contains all your channel configuration. Each variable is documented with comments explaining its purpose. 
 Channel CSS can be edited to customize the colors of the main theme, Although users may be able to switch to a different built-in theme if you prefer. 
 
 It's highly recommended to leave the Billtube script as is, hosting it yourself is possible but you will miss out on updates. The script is still being worked on and tested.
@@ -20,17 +23,4 @@ Go to admin settings > Edit > CSS and change the following variables to your lik
  --theme-bg-color: #040405;
 etc```
 
-After changing that you can go to your 
-Amin settings > Edit > Javascript.
-
-This part is pretty self explanatory, 1 is enabled, 0 is disabled.
-For Example ```UI_ChannelAnnouncement = 1;    
-ChannelAnnouncement_Title = 'bills announcement';
-ChannelAnnouncement_HTML = '<center>This is a custom channel announcement!</center>';``` 
-This will Enable a custom announcement above the MOTD.
-
-You are *required*to fill in the **wallpapers **and **video poster **yourself, without it you will corrupt the theme and it won't work properly.
-What you need to look for is *var BGPics* and *var Poster_URL*.
-
-Channel carousel under the video has been updated and is now using a json file.
- ```var Channel_JSON = 'https://cdn.jsdelivr.net/gh/BillTube/BillTube2@latest/channels.json';```
+After changing the CSS variables, you'll need to configure your environment settings in the `.env` file.
