@@ -4,25 +4,6 @@
   "description": "**THEME 2 installation**",
   "main": "BillTube2.js",
   "type": "commonjs",
-  "scripts": {
-    "lint": "node ./scripts/run-lint.js",
-    "lint:fix": "node ./scripts/run-lint.js --fix",
-    "format": "node ./scripts/format-files.js",
-    "format:check": "node ./scripts/check-format.js",
-    "precommit": "npx lint-staged",
-    "prepare": "husky install"
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/intentionallyIncomplete/BadMovieCytube.git"
@@ -30,14 +11,5 @@
   "bugs": {
     "url": "https://github.com/intentionallyIncomplete/BadMovieCytube/issues"
   },
-  "homepage": "https://github.com/intentionallyIncomplete/BadMovieCytube#readme",
-  "devDependencies": {
-    "eslint": "^9.35.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "prettier": "^3.6.2",
-    "husky": "^8.0.3",
-    "lint-staged": "^14.0.0",
-    "fast-glob": "^3.2.12"
-  }
+  "homepage": "https://github.com/intentionallyIncomplete/BadMovieCytube#readme"
 }
