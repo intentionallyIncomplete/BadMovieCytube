@@ -1,0 +1,6 @@
+# Bundles
+node_modules/
+dist/
+build/
+vendor/
+*.min.js

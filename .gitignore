@@ -4,8 +4,17 @@
 # Build scripts
 /scripts/
 
+# ESLint
+.eslintrc.js
+.prettierrc.js
+
+# Agent Rules
+.github/
+
 # Node modules (in case you add npm later)
 node_modules/
+.package-lock.json
+.package.json
 
 # OS files
 .DS_Store
