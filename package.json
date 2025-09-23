@@ -31,7 +31,10 @@
     "*.css": "eslint --fix"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint . --ext .js,.css,.md,.json",
+    "lint:fix": "eslint . --ext .js,.css,.md,.json --fix",
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
   },
   "keywords": [],
   "author": "",
