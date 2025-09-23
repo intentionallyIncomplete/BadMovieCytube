@@ -4,8 +4,13 @@
 # Build scripts
 /scripts/
 
+# ESLint, Husky, and Prettier configurations
+eslint.config.mjs
+.husky/
+
 # Agent Rules
 .github/
+.continue/
 
 # Node modules (in case you add npm later)
 node_modules/

@@ -2,8 +2,7 @@
   "name": "badmoviecytube",
   "version": "1.0.0",
   "description": "**THEME 2 installation**",
-  "main": "BillTube2.js",
-  "type": "commonjs",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/intentionallyIncomplete/BadMovieCytube.git"
@@ -11,5 +10,30 @@
   "bugs": {
     "url": "https://github.com/intentionallyIncomplete/BadMovieCytube/issues"
   },
-  "homepage": "https://github.com/intentionallyIncomplete/BadMovieCytube#readme"
+  "homepage": "https://github.com/intentionallyIncomplete/BadMovieCytube#readme",
+  "devDependencies": {
+    "@eslint/css": "^0.11.0",
+    "@eslint/js": "^9.36.0",
+    "@eslint/json": "^0.13.2",
+    "@eslint/markdown": "^7.2.0",
+    "@types/jquery": "^3.5.30",
+    "@types/node": "^22.7.9",
+    "@types/video.js": "^7.3.58",
+    "eslint": "^9.36.0",
+    "globals": "^16.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.0",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "typescript": "^5.6.3"
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix",
+    "*.css": "eslint --fix"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
