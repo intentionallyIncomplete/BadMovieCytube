@@ -24,3 +24,42 @@ Go to admin settings > Edit > CSS and change the following variables to your lik
 etc```
 
 After changing the CSS variables, you'll need to configure your environment settings in the `.env` file.
+
+**Linting (after pulling the dev branch)**
+1. Pull latest `dev` and install dependencies:
+```
+git checkout dev
+git pull
+npm ci
+```
+If `npm ci` fails, use:
+```
+npm install
+```
+2. Ensure Husky hooks are installed (safe to re-run):
+```
+npm run prepare
+```
+3. Run linting:
+```
+npm run lint
+```
+4. Auto-fix common issues:
+```
+npm run lint:fix
+```
+5. Pre-commit linting:
+   - Staged `*.js` and `*.css` files are linted automatically on `git commit` via `lint-staged`.
+   - Manual dry run:
+```
+npx lint-staged
+```
+6. Troubleshooting:
+   - If a commit fails with `Missing script: "test"`, update `/.husky/pre-commit` to run `lint-staged`:
+```
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx lint-staged
+```
+   - If hooks don't run, verify Husky is installed (`npm run prepare`) and that the repo is a Git repo (`.git` exists).
