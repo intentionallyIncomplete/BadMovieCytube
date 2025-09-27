@@ -12,7 +12,7 @@ eslint.config.mjs
 .github/
 .continue/
 
-# Node modules (in case you add npm later)
+# Node modules
 node_modules/
 package-lock.json
 package.json

@@ -709,7 +709,11 @@ ColorsArray = [
 },
 /* 2 */
 /***/ function (module, exports) {
-		window.CytubeEnhancedStorage = function (e, t, n) { var r = this; t = void 0 === t || t, n = void 0 !== n && n; var i = {}, a = {}, o = {}; try { o = JSON.parse(window.localStorage.getItem(e + "-" + (t ? "" : CHANNEL.name) + e)), o = _.isPlainObject(o) ? o : {} } catch (e) { o = {} } a = _.cloneDeep(o), this.getDefault = function (e) { return i[e] }, this.setDefault = function (e, t) { t = _.cloneDeep(t), i[e] = t, o[e] = void 0 !== o[e] ? o[e] : t, a[e] = void 0 !== a[e] ? a[e] : t }, this.get = function (e) { return o[e] }, this.set = function (e, t) { var i = o[e] = _.cloneDeep(t); return n && r.save(), i }, this.toggle = function (e) { var t = o[e] = !o[e]; return n && r.save(), t }, this.isDirty = function (e) { var t = !1; if (_.isArray(e)) { for (var n in e) if (!s(o[n], a[n])) { t = !0; break } } else t = !s(o[e], a[e]); return t }, this.save = function () { try { return window.localStorage.setItem(e + "-" + (t ? "" : CHANNEL.name) + e, JSON.stringify(o)) } catch (e) { return !1 } }, this.reset = function () { o = _.cloneDeep(i) }; var s = function (e, t) { return _.isArray(e) && _.isArray(t) ? 0 === _.difference(e, t).length && 0 === _.difference(t, e).length : _.isEqual(e, t) } };
+		// Storage implementation moved to src/core/CytubeEnhancedStorage.js
+		// Keep a no-op to avoid re-defining if already present.
+		if (!window.CytubeEnhancedStorage) {
+			window.CytubeEnhancedStorage = function () { /* noop: extracted */ };
+		}
 		/***/
 },
 /* 3 */
