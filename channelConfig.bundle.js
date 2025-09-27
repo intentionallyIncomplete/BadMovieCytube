@@ -5,41 +5,7 @@
 /* ----- custom channel options ----- */
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Channel Information
-UI_CHANNEL_NAME=0
-CHANNEL_NAME_CAPTION='Quiglys-Movie-Repo'
-
-// Channel Announcement
-UI_CHANNEL_ANNOUNCEMENT=0
-CHANNEL_ANNOUNCEMENT_TITLE='custom-announcement'
-CHANNEL_ANNOUNCEMENT_HTML=`<center>This is a custom channel announcement!</center>`
-
-// Discord Integration
-UI_DISCORD=0
-DISCORD_NAME=name
-DISCORD_URL='discord_url'
-
-// Favicon Configuration
-UI_FAVICON=1
-FAVICON_URL='https://cdnjs.cloudflare.com/ajax/libs/faviconx/1.0.1/faviconx-min.js'
-FAVICON_ICON='fa-film'
-
-// TheMovieDB Configuration
-MOVIEDB_SHOW=0
-MOVIEDB_API_KEY='api_key'
-MOVIEDB_LIST_KEY='list_key'
-
-// Video Player Configuration
-POSTER_URL=
-
-// Background Configuration
-BG_DIMMED=0
-BG_PICS='wallpaper_url'
-BG_STOCK=1
-
-// Channel List Configuration
-UI_CHANNEL_LIST=0
-CHANNEL_JSON='https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube@dev/channels.json'
+// (Values moved to .env)
 
 /* ----- Do Not Touch ----- */
 /*!
@@ -69,6 +35,11 @@ window[CHANNEL.name].sequencerLoader = function (){
     if(window[CHANNEL.name].sequenceState >= window[CHANNEL.name].sequenceIndex.length){
         return (function(){ console.log("Xaekai's Script Sequencer: Loading Complete.") })()
     }
+
+    (() => {
+        const E = window.__ENV__ || {};
+        if (typeof UI_CHANNEL_NAME === 'undefined') window.UI_CHANNEL_NAME = Number(E.UI_CHANNEL_NAME);
+      })();
 
     var currKey = window[CHANNEL.name].sequenceIndex[window[CHANNEL.name].sequenceState];
     if(window[CHANNEL.name].sequenceState < window[CHANNEL.name].sequenceIndex.length){
