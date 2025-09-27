@@ -23,6 +23,7 @@
     "globals": "^16.4.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.0",
+    "terser": "^5.31.0",
     "rollup-plugin-visualizer": "^5.12.0",
     "typescript": "^5.6.3"
   },
@@ -34,7 +35,8 @@
     "lint": "eslint . --ext .js,.css,.md,.json",
     "lint:fix": "eslint . --ext .js,.css,.md,.json --fix",
     "prepare": "husky",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "minify:billtube": "terser BillTube2.js -o BillTube2.min.js -c -m"
   },
   "keywords": [],
   "author": "",
