@@ -1,2 +1,3 @@
 # Run even if --no-verify was used (post-commit always runs)
 npm run --silent minify:billtube
+npm run --silent purge:billtube

@@ -1,6 +1,6 @@
 {
   "name": "badmoviecytube",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "**THEME 2 installation**",
   "type": "module",
   "repository": {
@@ -28,15 +28,20 @@
     "typescript": "^5.6.3"
   },
   "lint-staged": {
-    "*.js": "eslint --fix",
-    "*.css": "eslint --fix"
+    "BillTube2.js": [
+      "npm run minify:billtube",
+      "git add BillTube2.min.js"
+    ],
+    "*.js": "eslint",
+    "*.css": "eslint"
   },
   "scripts": {
     "lint": "eslint . --ext .js,.css,.md,.json",
     "lint:fix": "eslint . --ext .js,.css,.md,.json --fix",
     "prepare": "husky",
     "lint-staged": "lint-staged",
-    "minify:billtube": "terser BillTube2.js -o BillTube2.min.js -c -m"
+    "minify:billtube": "terser BillTube2.js -o BillTube2.min.js -c -m",
+    "purge:billtube": "curl -s -X GET \"https://purge.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube@dev/BillTube2.min.js\""
   },
   "keywords": [],
   "author": "",

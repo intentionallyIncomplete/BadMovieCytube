@@ -1,1 +1,1 @@
-npx lint-staged && npm run --silent minify:billtube
+npx lint-staged
