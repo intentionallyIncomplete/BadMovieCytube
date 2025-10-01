@@ -6,7 +6,6 @@
 * Special thanks to: Kuer, Xaekai, ss7(supersaw7), kenblu24, Kaba99(Cytube Enhanced) & squabble and others.
 * If i forgot to credit someone, Let me know and I will add you.
 */
-var VERSION = '2.3';
 
 // Import player management
 const playerManager = __webpack_require__('./src/player/playerManager.js');
@@ -19,7 +18,7 @@ window.socket.on("changeMedia", function () {
 });
 
 refreshVideo = function () {
-	$('#mediarefresh').click();
+	$('#mediarefresh').trigger('click');
 };
 
 function loadScript(src) {
