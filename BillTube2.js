@@ -8,8 +8,10 @@
 */
 
 // Import player management
-const playerManager = __webpack_require__('./src/player/playerManager.js');
-const vplayer = playerManager.initializePlayer();
+import { initializePlayer, videofix } from './src/player/playerManager.js';
+
+const vplayer = initializePlayer();
+
 window.socket.on("changeMedia", function () {
 	var myVideo = document.getElementById("ytapiplayer");
 	if (myVideo.addEventListener) {

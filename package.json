@@ -28,17 +28,10 @@
     "typescript": "^5.6.3"
   },
   "lint-staged": {
-    "BillTube2.js": [
-      "npm run minify:billtube",
-      "git add BillTube2.min.js"
-    ],
-    "*.js": "eslint",
-    "*.css": "eslint"
+    "*": "npm run lint"
   },
   "scripts": {
     "lint": "eslint . --ext .js,.css,.md,.json",
-    "lint:fix": "eslint . --ext .js,.css,.md,.json --fix",
-    "prepare": "husky",
     "lint-staged": "lint-staged",
     "minify:billtube": "terser BillTube2.js -o BillTube2.min.js -c -m",
     "purge:billtube": "curl -s -X GET \"https://purge.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube@dev/BillTube2.min.js\""
