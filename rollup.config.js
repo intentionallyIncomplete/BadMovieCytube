@@ -20,7 +20,7 @@ export default {
         file: 'BillTube2.min.js',
         format: 'iife',
         name: 'BillTube',
-        sourcemap: true,
+        sourcemap: false,
     },
     plugins: [buildLogger(), resolve(), commonjs(), terser()],
 };
