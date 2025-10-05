@@ -18,7 +18,7 @@ if (!this[CHANNEL.name])
     this[CHANNEL.name] = {};
 // -- The Module Library
 window[CHANNEL.name].sequenceList = {
-'BillTube':      { active: 1, rank: -1, url: "https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube@5ece4926068afb5631e85b87e9e7384c9b5cb86d/BillTube2.min.js",              callback: true },
+'BillTube':      { active: 1, rank: -1, url: "https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube@dev/BillTube2.min.js",              callback: true },
 };
 window[CHANNEL.name].sequencePrev = window[CHANNEL.name].sequencePrev || "";
 window[CHANNEL.name].sequenceState = window[CHANNEL.name].sequenceState || 0;
