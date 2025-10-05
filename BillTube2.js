@@ -6,12 +6,11 @@
 * Special thanks to: Kuer, Xaekai, ss7(supersaw7), kenblu24, Kaba99(Cytube Enhanced) & squabble and others.
 * If i forgot to credit someone, Let me know and I will add you.
 */
-
+console.log('BillTube2.js loaded');
 // Import player management
 import { initializePlayer, videofix } from './src/player/playerManager.js';
 
 const vplayer = initializePlayer();
-
 window.socket.on("changeMedia", function () {
 	var myVideo = document.getElementById("ytapiplayer");
 	if (myVideo.addEventListener) {

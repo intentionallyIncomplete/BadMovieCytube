@@ -16,6 +16,7 @@
     "@eslint/js": "^9.36.0",
     "@eslint/json": "^0.13.2",
     "@eslint/markdown": "^7.2.0",
+    "@rollup/plugin-terser": "^0.4.4",
     "@types/jquery": "^3.5.30",
     "@types/node": "^22.7.9",
     "@types/video.js": "^7.3.58",
@@ -23,6 +24,10 @@
     "globals": "^16.4.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.0",
+    "rollup": "^2.79.2",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-visualizer": "^5.12.0",
     "terser": "^5.44.0",
     "typescript": "^5.6.3"
@@ -34,6 +39,7 @@
     "lint": "eslint . --ext .js,.css,.md,.json",
     "lint-staged": "lint-staged",
     "minify:billtube": "terser BillTube2.js -o BillTube2.min.js -c -m",
+    "build:billtube": "rollup -c",
     "purge:billtube": "curl -s -X GET \"https://purge.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube@dev/BillTube2.min.js\""
   },
   "keywords": [],
