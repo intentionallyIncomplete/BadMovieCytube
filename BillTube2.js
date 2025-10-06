@@ -82,7 +82,7 @@ var stringToColour = function (str) {
 
 	return colour;
 }
-$messagebuffer = $("#messagebuffer");
+window.$messagebuffer = $("#messagebuffer");
 
 function formatChatMessage(data, last) {
 	if (!data.meta || data.msgclass) {
