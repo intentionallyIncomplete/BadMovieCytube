@@ -273,7 +273,7 @@ ColorsArray = [
 			var that = this;
 
 			var preloadedScript = document.createElement("script");
-			preloadedScript.src = "https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube/scripts/lazy.js";
+			preloadedScript.src = "https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube/src/js/lazy.js";
 			document.body.appendChild(preloadedScript);
 
 			//Mobile Check
