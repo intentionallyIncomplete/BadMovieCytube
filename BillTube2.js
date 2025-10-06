@@ -161,7 +161,7 @@ function formatChatMessage(data, last) {
 	return div;
 
 }
-ColorsArray = [
+window.ColorsArray = [
 	'white', 'papayawhip', 'silver', 'gray', 'black', 'yellow', 'gold', 'orange', 'orangered', 'tomato',
 	'pink', 'red', 'crimson', 'deeppink', 'magenta', 'violet', 'darkviolet', 'purple', 'brown', 'saddlebrown',
 	'turquoise', 'limegreen', 'green', 'olive', 'darkkhaki', 'aqua', 'dodgerblue', 'blue', 'midnightblue',
