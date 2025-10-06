@@ -12,6 +12,7 @@ import { initializePlayer, videofix } from './src/js/playerManager.js';
 import { createWebpackRuntime } from './src/js/webpackRuntime.js';
 
 const vplayer = initializePlayer();
+
 window.socket.on("changeMedia", function () {
 	var myVideo = document.getElementById("ytapiplayer");
 	if (myVideo.addEventListener) {
@@ -162,6 +163,7 @@ function formatChatMessage(data, last) {
 	return div;
 
 }
+
 window.ColorsArray = [
 	'white', 'papayawhip', 'silver', 'gray', 'black', 'yellow', 'gold', 'orange', 'orangered', 'tomato',
 	'pink', 'red', 'crimson', 'deeppink', 'magenta', 'violet', 'darkviolet', 'purple', 'brown', 'saddlebrown',
