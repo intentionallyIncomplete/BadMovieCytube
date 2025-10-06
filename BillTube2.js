@@ -8,7 +8,7 @@
 */
 
 // Import player management
-import { initializePlayer, videofix } from './src/player/playerManager.js';
+import { initializePlayer, videofix } from './src/js/playerManager.js';
 
 const vplayer = initializePlayer();
 window.socket.on("changeMedia", function () {
@@ -18,7 +18,7 @@ window.socket.on("changeMedia", function () {
 	}
 });
 
-refreshVideo = function () {
+window.refreshVideo = function () {
 	$('#mediarefresh').trigger('click');
 };
 
