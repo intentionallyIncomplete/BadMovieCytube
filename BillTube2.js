@@ -8,8 +8,11 @@
 */
 
 // Import player management
-import { initializePlayer, videofix } from './src/js/playerManager.js';
-import { createWebpackRuntime } from './src/js/webpackRuntime.js';
+import { initializePlayer, videofix } from './src/player/playerManager.js';
+import { createWebpackRuntime } from './src/assets/webpackRuntime.js';
+import { CytubeEnhancedStorage } from './src/core/CytubeEnhancedStorage.js';
+
+window.CytubeEnhancedStorage = CytubeEnhancedStorage;
 
 const vplayer = initializePlayer();
 
@@ -667,13 +670,8 @@ function (module, exports, __webpack_require__) {
 		/***/
 },
 /* 2 */
-/***/ function (module, exports) {
-		// Storage implementation moved to src/core/CytubeEnhancedStorage.js
-		// Keep a no-op to avoid re-defining if already present.
-		if (!window.CytubeEnhancedStorage) {
-			window.CytubeEnhancedStorage = function () { /* noop: extracted */ };
-		}
-		/***/
+function (module, exports) {
+	module.exports = CytubeEnhancedStorage;
 },
 /* 3 */
 /***/ function (module, exports) {

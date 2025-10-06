@@ -1,106 +1,139 @@
 // src/core/CytubeEnhancedStorage.js
 /* global _, CHANNEL */
-(function attach(global) {
-    var CE_DEBUG = !!global.CE_DEBUG;
-    function debugLog() {
-        if (!CE_DEBUG || typeof console === "undefined" || !console.log) return;
-        var args = ["[CytubeEnhancedStorage]"]; // eslint-disable-next-line no-console
-        console.log.apply(console, args.concat([].slice.call(arguments)));
+// TODO: replace lodash globals with explicit imports when bundler updated
+
+const CE_DEBUG = Boolean(typeof window !== 'undefined' && window.CE_DEBUG);
+
+function debugLog(...args) {
+    if (!CE_DEBUG || typeof console === 'undefined' || typeof console.log !== 'function') {
+        return;
     }
-    function CytubeEnhancedStorage(namespace, isGlobal, autosave) {
-        var self = this;
-        isGlobal = (isGlobal === undefined) || isGlobal;
-        autosave = (autosave !== undefined) && autosave;
+    console.log('[CytubeEnhancedStorage]', ...args); // eslint-disable-line no-console
+}
 
-        var defaults = {};
-        var initial = {};
-        var values = {};
+function safeChannelName() {
+    if (typeof CHANNEL === 'undefined' || !CHANNEL || !CHANNEL.name) {
+        return '';
+    }
+    return CHANNEL.name;
+}
 
-        debugLog("init", {
-            namespace: namespace,
-            isGlobal: isGlobal,
-            autosave: autosave,
-            channel: isGlobal ? "" : (typeof CHANNEL !== "undefined" ? CHANNEL.name : undefined)
-        });
+function buildStorageKey(namespace, isGlobal) {
+    const channel = isGlobal ? '' : safeChannelName();
+    return `${namespace}-${channel}${namespace}`;
+}
 
-        try {
-            values = JSON.parse(window.localStorage.getItem(namespace + "-" + (isGlobal ? "" : CHANNEL.name) + namespace));
-            values = _.isPlainObject(values) ? values : {};
-        } catch (e) {
-            values = {};
+function equals(a, b) {
+    return _.isArray(a) && _.isArray(b)
+        ? _.difference(a, b).length === 0 && _.difference(b, a).length === 0
+        : _.isEqual(a, b);
+}
+
+export function CytubeEnhancedStorage(namespace, isGlobal = true, autosave = false) {
+    const globalFlag = Boolean(isGlobal);
+    const autoSaveFlag = Boolean(autosave);
+
+    let defaults = {};
+    let initial = {};
+    let values = {};
+
+    debugLog('init', {
+        namespace,
+        isGlobal: globalFlag,
+        autosave: autoSaveFlag,
+        channel: globalFlag ? '' : safeChannelName()
+    });
+
+    try {
+        const raw = window.localStorage.getItem(buildStorageKey(namespace, globalFlag));
+        const parsed = JSON.parse(raw);
+        values = _.isPlainObject(parsed) ? parsed : {};
+    } catch (e) {
+        values = {};
+    }
+
+    initial = _.cloneDeep(values);
+
+    try {
+        debugLog('loaded', { keys: Object.keys(values).length });
+    } catch (e) {
+        // noop
+    }
+
+    this.getDefault = function getDefault(key) {
+        return defaults[key];
+    };
+
+    this.setDefault = function setDefault(key, val) {
+        const cloned = _.cloneDeep(val);
+        defaults[key] = cloned;
+        if (values[key] === undefined) {
+            values[key] = cloned;
         }
+        if (initial[key] === undefined) {
+            initial[key] = cloned;
+        }
+        debugLog('setDefault', key, val);
+    };
 
-        initial = _.cloneDeep(values);
+    this.get = function get(key) {
+        return values[key];
+    };
 
-        try { debugLog("loaded", { keys: Object.keys(values).length }); } catch (e) { /* noop */ }
+    this.set = function set(key, val) {
+        const cloned = _.cloneDeep(val);
+        values[key] = cloned;
+        if (autoSaveFlag) this.save();
+        debugLog('set', key, val);
+        return cloned;
+    };
 
-        this.getDefault = function (key) {
-            return defaults[key];
-        };
+    this.toggle = function toggle(key) {
+        const toggled = !values[key];
+        values[key] = toggled;
+        if (autoSaveFlag) this.save();
+        debugLog('toggle', key, toggled);
+        return toggled;
+    };
 
-        this.setDefault = function (key, val) {
-            val = _.cloneDeep(val);
-            defaults[key] = val;
-            values[key] = values[key] !== undefined ? values[key] : val;
-            initial[key] = initial[key] !== undefined ? initial[key] : val;
-            debugLog("setDefault", key, val);
-        };
-
-        this.get = function (key) {
-            return values[key];
-        };
-
-        this.set = function (key, val) {
-            var v = values[key] = _.cloneDeep(val);
-            if (autosave) self.save();
-            debugLog("set", key, val);
-            return v;
-        };
-
-        this.toggle = function (key) {
-            var v = values[key] = !values[key];
-            if (autosave) self.save();
-            debugLog("toggle", key, v);
-            return v;
-        };
-
-        this.isDirty = function (keys) {
-            var dirty = false;
-            if (_.isArray(keys)) {
-                for (var n in keys) {
-                    if (!equals(values[n], initial[n])) {
-                        dirty = true;
-                        break;
-                    }
+    this.isDirty = function isDirty(keys) {
+        let dirty = false;
+        if (_.isArray(keys)) {
+            for (let i = 0; i < keys.length; i += 1) {
+                const key = keys[i];
+                if (!equals(values[key], initial[key])) {
+                    dirty = true;
+                    break;
                 }
-            } else {
-                dirty = !equals(values[keys], initial[keys]);
             }
-            debugLog("isDirty", keys, dirty);
-            return dirty;
-        };
+        } else {
+            dirty = !equals(values[keys], initial[keys]);
+        }
+        debugLog('isDirty', keys, dirty);
+        return dirty;
+    };
 
-        this.save = function () {
+    this.save = function save() {
+        try {
+            const key = buildStorageKey(namespace, globalFlag);
+            const ok = window.localStorage.setItem(key, JSON.stringify(values));
             try {
-                var ok = window.localStorage.setItem(namespace + "-" + (isGlobal ? "" : CHANNEL.name) + namespace, JSON.stringify(values));
-                try { debugLog("save", { namespace: namespace, isGlobal: isGlobal, keys: Object.keys(values).length }); } catch (e) { /* noop */ }
-                return ok;
-            } catch (e) {
-                return false;
+                debugLog('save', {
+                    namespace,
+                    isGlobal: globalFlag,
+                    keys: Object.keys(values).length
+                });
+            } catch (err) {
+                // noop
             }
-        };
+            return ok;
+        } catch (err) {
+            return false;
+        }
+    };
 
-        this.reset = function () {
-            values = _.cloneDeep(defaults);
-            debugLog("reset");
-        };
-
-        var equals = function (a, b) {
-            return _.isArray(a) && _.isArray(b)
-                ? _.difference(a, b).length === 0 && _.difference(b, a).length === 0
-                : _.isEqual(a, b);
-        };
-    }
-
-    global.CytubeEnhancedStorage = CytubeEnhancedStorage;
-})(window);
+    this.reset = function reset() {
+        values = _.cloneDeep(defaults);
+        debugLog('reset');
+    };
+}
