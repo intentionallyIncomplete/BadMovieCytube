@@ -6,7 +6,7 @@
 * Special thanks to: Kuer, Xaekai, ss7(supersaw7), kenblu24, Kaba99(Cytube Enhanced) & squabble and others.
 * If i forgot to credit someone, Let me know and I will add you.
 */
-console.log('BillTube2.js loaded');
+
 // Import player management
 import { initializePlayer, videofix } from './src/player/playerManager.js';
 
@@ -273,7 +273,7 @@ ColorsArray = [
 			var that = this;
 
 			var preloadedScript = document.createElement("script");
-			preloadedScript.src = "https://cdn.jsdelivr.net/gh/BillTube/BillTube2/lazy.js";
+			preloadedScript.src = "https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube/scripts/lazy.js";
 			document.body.appendChild(preloadedScript);
 
 			//Mobile Check
@@ -288,10 +288,10 @@ ColorsArray = [
 				console.log("Loading Desktop Theme");
 				//Load some dependencies for the base theme
 				$('head').append("<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' />");
-				$('head').append("<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube/base.css' />");
+				$('head').append("<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube/src/css/base.css' />");
 				$('head').append("<link rel='stylesheet' href='https://unpkg.com/@videojs/themes@1/dist/city/index.css' />");
 				$.getScript("//dl.dropbox.com/s/m5kd8r2slhnfu1c/notifications.js");
-				$.getScript("https://cdn.jsdelivr.net/gh/BillTube/BillTube2/avatars.js");
+				$.getScript("/src/js/avatars.js");
 
 
 				window.FontAwesomeKitConfig = {
@@ -2935,7 +2935,7 @@ ColorsArray = [
 				$('head').append("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css' />");
 				$('head').append("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css' />");
 				$('head').append("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.transitions.min.css' />");
-				$('head').append("<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/BillTube/BillTube2/channelslider.css' />");
+				$('head').append("<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube/src/css/channelslider.css' />");
 
 				$("#motdrow").before('<div class="slider"><i id="left" class="arrow arrleft"></i><div id="carousel" class="carousel-inner owl-carousel owl-theme owl-hero-theme"></div><i id="right" class="arrow arrright"></i></div>');
 			}
@@ -3306,7 +3306,7 @@ ColorsArray = [
 			settings = $.extend({}, defaultSettings, settings);
 
 			if (UI_Discord == "1" && Discord_URL != "") {
-				$('head').append("<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/BillTube/BillTube2/discord.css' />");
+				$('head').append("<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube/src/css/discord.css' />");
 				$("#motd").after("<div class='discordoverlay'><div class='discordmain'><img class='discord' src='//i.postimg.cc/J73Nn5nb/J6RTf6P.png' /><div class=discordtext><h1>Join the community!</h1><h2><a href='" + Discord_URL + "' target='_blank'>" + Discord_NAME + "</a></h2></div><div class='Darrows Darrows-1'></div><div class='Darrows Darrows-2'></div></div></div>");
 			}
 		});
@@ -3949,7 +3949,7 @@ body {
 				document.body.insertBefore(schedule, useroptions);
 			})();
 
-			$('head').append("<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/BillTube/BillTube2/mlist.css' />");
+			$('head').append("<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube/src/css/mlist.css' />");
 			URL_API = 'https://api.themoviedb.org/3/list/' + moviedblist + '?api_key=' + moviedbkey + '&language=en-US';
 			var movieList = [];
 			var i = 0;
