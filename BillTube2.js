@@ -245,13 +245,14 @@ function (module, exports, __webpack_require__) {
 					$("#ytapiplayer").attr("muted", "");
 					$("#ytapiplayer").attr("playsinline", "");
 					$("#main").after($("#chatwrap"));
-	
-					await loadResources([
-						{ type: 'css', href: '//dl.dropbox.com/s/sjb7rw59p0qnx6a/mobile.css' },
-						{ type: 'js', src: '//dl.dropbox.com/s/5h0liiwcqqdfbh0/mobile.js' },
-					]);
-	
-					console.log("Loading Mobile Theme");
+					try {
+						await loadResources([
+							{ type: 'css', href: '//dl.dropbox.com/s/sjb7rw59p0qnx6a/mobile.css' },
+							{ type: 'js', src: '//dl.dropbox.com/s/5h0liiwcqqdfbh0/mobile.js' },
+						]);
+					} catch (err) {
+						console.error('Failed to load resource:', err.message, err);
+					}
 				} else {
 				//Load some dependencies for the base theme
 				try {
@@ -259,7 +260,7 @@ function (module, exports, __webpack_require__) {
 						{ type: 'css', href: 'src/css/base.css' },
 						{ type: 'css', href: 'https://unpkg.com/@videojs/themes@1/dist/city/index.css' },
 						{ type: 'js', src: '//dl.dropbox.com/s/m5kd8r2slhnfu1c/notifications.js' },
-						{ type: 'js', src: '/src/assets/avatars.js' },
+						{ type: 'js', src: 'src/assets/avatars.js' },
 					]);
 				} catch (err) {
 					console.error('Failed to load resource:', err.message, err);
@@ -283,7 +284,7 @@ function (module, exports, __webpack_require__) {
 						'</div></div>');
 					$("#chatheader").append(
 						'<div class="chat-area-header">' +
-						'<div class="chat-area-title" data-tooltip="Toggle title scroll" data-tooltip-pos="down-left"><i id="marq" class="fad fa-play" onclick="toggleClassTitle()"></i></div>' +
+						'<div class="chat-area-title" data-tooltip="Toggle title scroll" data-tooltip-pos="down-left"><i id="marq" class="fas fa-play" onclick="toggleClassTitle()"></i></div>' +
 						'<div class="chat-area-group">' +
 						'<span></span>' +
 						'</div>');
@@ -296,15 +297,15 @@ function (module, exports, __webpack_require__) {
 						imageHeight = $placeholder.get(0).naturalHeight;
 					}
 					$("#videowrap").addClass("vjs-theme-city");
-					$(".server-msg-reconnect").addClass("fad fa-plug");
+					$(".server-msg-reconnect").addClass("fas fa-plug");
 					$(".server-msg-reconnect").text("");
 					$("body").addClass("darktheme");
 					$("#userlisttoggle").removeClass("glyphicon glyphicon-chevron-down pull-left pointer");
 					$("#newpollbtn").removeClass("btn btn-sm btn-default").addClass("headerbtn");
 					$("#leader").removeClass("btn btn-sm btn-default");
 					$("#Notif").removeClass("btn btn-sm btn-default");
-					$("#fullscreenbtn").removeClass("btn-default").addClass("fad fa-expand-arrows-alt");
-					$("#userlisttoggle").addClass("fa fa-users ch").text("");
+					$("#fullscreenbtn").removeClass("btn-default").addClass("fas fa-expand");
+					$("#userlisttoggle").addClass("fas fa-users ch").text("");
 					$("#showchansettings").text("Admin Settings");
 					$("#controlsrow").after($("#motdrow"));
 					$(".container-fluid").append($("#footer"));
@@ -316,8 +317,8 @@ function (module, exports, __webpack_require__) {
 					$("#main").after($("#drinkbarwrap"));
 					$("#nav-collapsible").append("<div id='headright'><div id='progbar'></div></div>");
 					$(".chat-area-title").after($("#currenttitle"));
-					$("#emotelistbtn").text("").removeClass("btn btn-sm btn-default").addClass("fa fa-picture-o ch");
-					$("#fullscreenbtn").text("").addClass("fa fa-arrows-alt").removeClass("btn btn-sm");
+					$("#emotelistbtn").text("").removeClass("btn btn-sm btn-default").addClass("fas fa-image ch");
+					$("#fullscreenbtn").text("").addClass("fas fa-maximize").removeClass("btn btn-sm");
 					$("#loginform").detach().after("#headermenu");
 					$("#nav-collapsible").after($("#fullscreenbtn"));
 					$("#morebtn").after($("#videocontrols"));
@@ -330,7 +331,7 @@ function (module, exports, __webpack_require__) {
 					$("#modli").append($("#modflair"));
 					$("#videoinfo").after($("#rightpane"));
 					$("#rightpane-inner").addClass("section");
-					$("#mediarefresh").addClass("fal fa-sync OLB").removeClass("btn btn-sm btn-default").text("");
+					$("#mediarefresh").addClass("fas fa-sync OLB").removeClass("btn btn-sm btn-default").text("");
 					$("#userlist").addClass("animated animatedFadeInUp fadeInUp");
 					$("#queue").addClass("queue_sortable");
 					$("#rightpane").after("<div id='queuecontainer' class='section'><div class='textheader'><p id='upnext' class='sectionheader'>Up Next</p></div></div>");
@@ -716,7 +717,7 @@ function (module, exports) {
 			};
 			settings = $.extend({}, defaultSettings, settings);
 
-			$("#videowrap").append("<div id='VideoOverlay' class='fadein'><button class='fal fa-expand-alt OLB' id='fs-vid-button'></button></div>");
+			$("#videowrap").append("<div id='VideoOverlay' class='fadein'><button class='fas fa-expand OLB' id='fs-vid-button'></button></div>");
 			$("#VideoOverlay").hide();
 			var i = null;
 			$("#videowrap").mousemove(function () {
@@ -728,8 +729,8 @@ function (module, exports) {
 				$("#VideoOverlay").hide();
 			});
 			$("#VideoOverlay").append($("#mediarefresh"));
-			$("#VideoOverlay").append("<button id='skip' title='Voteskip the video' class='fal fa-arrow-alt-to-right OLB'></button>");
-			$("#VideoOverlay").append("<button id='Ambient' title='Ambient Mode beta' style='float: right;' class='fal fa-popcorn OLB'></button>");
+			$("#VideoOverlay").append("<button id='skip' title='Voteskip the video' class='fas fa-arrow-right OLB'></button>");
+			$("#VideoOverlay").append("<button id='Ambient' title='Ambient Mode beta' style='float: right;' class='fas fa-film OLB'></button>");
 			$("#Ambient").click(function () {
 				$.getScript("https://dl.dropbox.com/s/bwocup9ggrr5n7f/ambient.js");
 			});
@@ -1056,7 +1057,7 @@ function (module, exports) {
 			});
 		});
 
-		bumplastbtn = $('<button title="Bump last added video" id="bumplast-btn" class="btn btn-default fal fa-redo"></button>')
+		bumplastbtn = $('<button title="Bump last added video" id="bumplast-btn" class="btn btn-default fas fa-redo"></button>')
 			.appendTo(ploptions)
 			.on("click", function () {
 				len = $("#queue").children().length;
@@ -1064,7 +1065,7 @@ function (module, exports) {
 				socket.emit("moveMedia", { from: uid, after: PL_CURRENT });
 			});
 
-		deletelastbtn = $('<button title="Delete last added video" id="deletelast-btn" class="btn btn-default fal fa-trash-undo-alt"></button>')
+		deletelastbtn = $('<button title="Delete last added video" id="deletelast-btn" class="btn btn-default fas fa-trash-arrow-up"></button>')
 			.appendTo(ploptions)
 			.on("click", function () {
 				if (confirm('Are you sure to delete last item?')) {
@@ -1132,7 +1133,7 @@ function (module, exports) {
 			};
 
 			this.$markdownHelperBtn = $('<button id="markdown-helper-btn" type="button" class="chatbtn" data-tooltip="Markdown Helper" data-tooltip-pos="up">')
-				.html('<i class="fad fa-font-case"></i>')
+				.html('<i class="fas fa-font"></i>')
 				.on('click', function () {
 					that.handleMarkdownHelperBtnClick($(this), that.$markdownTemplatesWrapper);
 
@@ -2425,7 +2426,7 @@ function (module, exports) {
 				app.getModule('favouritePictures').done(function (favouritePicturesModule) {
 					favouritePicturesModule.makeSmilesAndPicturesTogether();
 				});
-				$('<button id="smiles-and-picture-btn" class="chatbtn fad fa-images" title="' + app.t('general[.]Show emotes and favorite images') + '">')
+				$('<button id="smiles-and-picture-btn" class="chatbtn fas fa-images" title="' + app.t('general[.]Show emotes and favorite images') + '">')
 					.html('<i class="glyphicon glyphicon-th-large"></i>')
 					.prependTo($('#chat-controls'))
 					.on('click', function () {
@@ -3691,7 +3692,7 @@ function (module, exports) {
 					'<label class="checkbox-inline"><input type="checkbox" id="translate" class="searchoption" value="no"> Single</label>' +
 					'<label class="checkbox-inline"><input type="checkbox" id="random" class="searchoption" value="no"> Random</label>' +
 					'</span><button style="float:right padding: 1px 6px;" class="Trendingbutton" id="trending">Trending</button></center>' +
-					'<div style="height:40px"><center><button style="float:left;margin:5px 0 5px 0;" class="btn btn-sm btn-default gbackbutton fal fa-arrow-left" disabled></button><span class="text-info imagesearch"></span><button style="float:right;margin:5px 0 5px 0;" class="btn btn-sm btn-default gforwardbutton fal fa-arrow-right" disabled></button></center></div>' +
+					'<div style="height:40px"><center><button style="float:left;margin:5px 0 5px 0;" class="btn btn-sm btn-default gbackbutton fas fa-arrow-left" disabled></button><span class="text-info imagesearch"></span><button style="float:right;margin:5px 0 5px 0;" class="btn btn-sm btn-default gforwardbutton fas fa-arrow-right" disabled></button></center></div>' +
 					'<center><img id="single" style="cursor:pointer;max-width:500px;max-height:500px;display:none"/></center>' +
 					'<center><span style="max-height:100%;display:none" class="giphyimage">' +
 					'<img class="GiphyCell"/><img class="GiphyCell"/><img class="GiphyCell"/><img class="GiphyCell"/>' +
