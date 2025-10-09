@@ -407,7 +407,7 @@ function (module, exports, __webpack_require__) {
 						}
 					});
 
-
+					let BG_Dimmed;
 					// Dim the background
 					if (BG_Dimmed == "1") {
 						$("<style>")
