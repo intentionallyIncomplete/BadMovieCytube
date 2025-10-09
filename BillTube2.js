@@ -11,6 +11,7 @@
 import 'lazysizes';
 import 'lazysizes/plugins/unveilhooks/ls.unveilhooks'; // supports data-bg, data-poster, non-img nodes
 import './src/js/CytubeEnhancedHelpers/lazysizesHooks.js';
+import { loadResources } from './src/js/CytubeEnhancedHelpers/loadResources.js';
 import { initializePlayer, videofix } from './src/player/playerManager.js';
 import { createWebpackRuntime } from './src/assets/webpackRuntime.js';
 import { CytubeEnhancedStorage } from './src/core/CytubeEnhancedStorage.js';
@@ -252,14 +253,17 @@ function (module, exports, __webpack_require__) {
 	
 					console.log("Loading Mobile Theme");
 				} else {
-					console.log("Loading Desktop Theme");
-					//Load some dependencies for the base theme
+				//Load some dependencies for the base theme
+				try {
 					await loadResources([
 						{ type: 'css', href: 'src/css/base.css' },
 						{ type: 'css', href: 'https://unpkg.com/@videojs/themes@1/dist/city/index.css' },
 						{ type: 'js', src: '//dl.dropbox.com/s/m5kd8r2slhnfu1c/notifications.js' },
 						{ type: 'js', src: '/src/assets/avatars.js' },
 					]);
+				} catch (err) {
+					console.error('Failed to load resource:', err.message, err);
+				}
 	
 					if (window.location.protocol != "https:")
 						window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
