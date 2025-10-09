@@ -38,7 +38,6 @@
   "scripts": {
     "lint": "eslint . --ext .js,.css,.md,.json",
     "lint-staged": "lint-staged",
-    "minify:billtube": "terser BillTube2.js -o BillTube2.min.js -c -m",
     "build:billtube": "rollup -c scripts/rollup.config.js",
     "purge:billtube": "curl -s -X GET \"https://purge.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube@dev/BillTube2.min.js\""
   },
@@ -48,6 +47,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-solid-svg-icons": "^7.1.0"
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "lazysizes": "^5.3.2"
   }
 }
