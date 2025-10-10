@@ -17,9 +17,11 @@ import { createWebpackRuntime } from './src/assets/webpackRuntime.js';
 import { CytubeEnhancedStorage } from './src/core/CytubeEnhancedStorage.js';
 import './src/assets/icons.js';
 
-window.CytubeEnhancedStorage = CytubeEnhancedStorage;
-
+const CDN_URL = process.env.CDN_URL || 'https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube';
+const DEV_BRANCH = process.env.DEV_BRANCH || '@dev';
 const vplayer = initializePlayer();
+
+window.CytubeEnhancedStorage = CytubeEnhancedStorage;
 
 window.socket.on("changeMedia", function () {
 	var myVideo = document.getElementById("ytapiplayer");
@@ -240,11 +242,11 @@ function (module, exports, __webpack_require__) {
 			var that = this;
 
 			(async function initResources() {
-				//Mobile Check
-				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-					$("#ytapiplayer").attr("muted", "");
-					$("#ytapiplayer").attr("playsinline", "");
-					$("#main").after($("#chatwrap"));
+			//Mobile Check
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				$("#ytapiplayer").attr("muted", "");
+				$("#ytapiplayer").attr("playsinline", "");
+				$("#main").after($("#chatwrap"));
 					try {
 						await loadResources([
 							{ type: 'css', href: '//dl.dropbox.com/s/sjb7rw59p0qnx6a/mobile.css' },
@@ -253,206 +255,194 @@ function (module, exports, __webpack_require__) {
 					} catch (err) {
 						console.error('Failed to load resource:', err.message, err);
 					}
-				} else {
+			} else {
 				//Load some dependencies for the base theme
 				try {
 					await loadResources([
-						{ type: 'css', href: 'src/css/base.css' },
+						{ type: 'css', href: `${CDN_URL}${DEV_BRANCH}/src/css/base.css` },
 						{ type: 'css', href: 'https://unpkg.com/@videojs/themes@1/dist/city/index.css' },
 						{ type: 'js', src: '//dl.dropbox.com/s/m5kd8r2slhnfu1c/notifications.js' },
-						{ type: 'js', src: 'src/assets/avatars.js' },
+						{ type: 'js', src: `${CDN_URL}${DEV_BRANCH}/src/assets/avatars.js` },
 					]);
 				} catch (err) {
 					console.error('Failed to load resource:', err.message, err);
 				}
-	
-					if (window.location.protocol != "https:")
-						window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+
+				if (window.location.protocol != "https:")
+					window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
 					
-					$("#rightpane-inner").prepend("<div id='mediabuttons'></div>");
-					$('#modflair').hide();
-					$('#emotelistbtn').hide();
-					$('#voteskip').hide();
-					$('#fullscreenbtn').hide();
-					$("#nav-collapsible").append("<div id='headermenu' class='headermenu'></div>");
-					$('#videowrap-header').hide();
-					$('body').removeClass('compact').removeClass('synchtube').removeClass('hd');
-					$("#chatwrap").append(
-						'<div class="chat-area-footer">' +
-						'<div class="chat-area-buttons">' +
-						'<div id="chatbox"></div>' +
-						'</div></div>');
-					$("#chatheader").append(
-						'<div class="chat-area-header">' +
+				$("#rightpane-inner").prepend("<div id='mediabuttons'></div>");
+				$('#modflair').hide();
+				$('#emotelistbtn').hide();
+				$('#voteskip').hide();
+				$('#fullscreenbtn').hide();
+				$("#nav-collapsible").append("<div id='headermenu' class='headermenu'></div>");
+				$('#videowrap-header').hide();
+				$('body').removeClass('compact').removeClass('synchtube').removeClass('hd');
+				$("#chatwrap").append(
+					'<div class="chat-area-footer">' +
+					'<div class="chat-area-buttons">' +
+					'<div id="chatbox"></div>' +
+					'</div></div>');
+				$("#chatheader").append(
+					'<div class="chat-area-header">' +
 						'<div class="chat-area-title" data-tooltip="Toggle title scroll" data-tooltip-pos="down-left"><i id="marq" class="fas fa-play" onclick="toggleClassTitle()"></i></div>' +
-						'<div class="chat-area-group">' +
-						'<span></span>' +
-						'</div>');
-					$('div[class^="chat-msg-"], div[class*=" chat-msg-"]').css({
-						'min-height': '20px'
-					});
-					var setImageSrc = function (imageData) {
-						$placeholder.attr('src', imageData);
-						imageWidth = $placeholder.get(0).naturalWidth;
-						imageHeight = $placeholder.get(0).naturalHeight;
-					}
-					$("#videowrap").addClass("vjs-theme-city");
+					'<div class="chat-area-group">' +
+					'<span></span>' +
+					'</div>');
+				$('div[class^="chat-msg-"], div[class*=" chat-msg-"]').css({
+					'min-height': '20px'
+				});
+				var setImageSrc = function (imageData) {
+					$placeholder.attr('src', imageData);
+					imageWidth = $placeholder.get(0).naturalWidth;
+					imageHeight = $placeholder.get(0).naturalHeight;
+				}
+				$("#videowrap").addClass("vjs-theme-city");
 					$(".server-msg-reconnect").addClass("fas fa-plug");
-					$(".server-msg-reconnect").text("");
-					$("body").addClass("darktheme");
-					$("#userlisttoggle").removeClass("glyphicon glyphicon-chevron-down pull-left pointer");
-					$("#newpollbtn").removeClass("btn btn-sm btn-default").addClass("headerbtn");
-					$("#leader").removeClass("btn btn-sm btn-default");
-					$("#Notif").removeClass("btn btn-sm btn-default");
+				$(".server-msg-reconnect").text("");
+				$("body").addClass("darktheme");
+				$("#userlisttoggle").removeClass("glyphicon glyphicon-chevron-down pull-left pointer");
+				$("#newpollbtn").removeClass("btn btn-sm btn-default").addClass("headerbtn");
+				$("#leader").removeClass("btn btn-sm btn-default");
+				$("#Notif").removeClass("btn btn-sm btn-default");
 					$("#fullscreenbtn").removeClass("btn-default").addClass("fas fa-expand");
 					$("#userlisttoggle").addClass("fas fa-users ch").text("");
-					$("#showchansettings").text("Admin Settings");
-					$("#controlsrow").after($("#motdrow"));
-					$(".container-fluid").append($("#footer"));
-					$('#footer').children('.container').append('<p class="text-muted credit">Copyrights and trademarks for the shows and other promotional materials are held by their respective owners and their use is allowed under the fair use clause of the Copyright Law. The author is not responsible for any contents linked or referred to from his pages, All CyTu.be does is link or embed content that was uploaded to popular Online Video hosting sites like Youtube.com / Google drive. All Google users signed a contract with the sites when they set up their accounts wich forces them not to upload illegal content.(<a href="https://www.lumendatabase.org/topics/14">DMCA Safe Harbor</a>)<h4><center><br>BillTube Theme 2</p>(<a href="http://discord.gg/fwadWd9">Available Now</a>)</center></h4>');
-					$("#mainpage").prepend($("#chatwrap"));
-					$("#userlist").prepend("<div id='connected'></div>");
-					$("#userlisttoggle").append($("#usercount"));
-					$("#connected").append("<span id='connectedText'>&nbsp Logged in users</span>");
-					$("#main").after($("#drinkbarwrap"));
-					$("#nav-collapsible").append("<div id='headright'><div id='progbar'></div></div>");
-					$(".chat-area-title").after($("#currenttitle"));
+				$("#showchansettings").text("Admin Settings");
+				$("#controlsrow").after($("#motdrow"));
+				$(".container-fluid").append($("#footer"));
+				$('#footer').children('.container').append('<p class="text-muted credit">Copyrights and trademarks for the shows and other promotional materials are held by their respective owners and their use is allowed under the fair use clause of the Copyright Law. The author is not responsible for any contents linked or referred to from his pages, All CyTu.be does is link or embed content that was uploaded to popular Online Video hosting sites like Youtube.com / Google drive. All Google users signed a contract with the sites when they set up their accounts wich forces them not to upload illegal content.(<a href="https://www.lumendatabase.org/topics/14">DMCA Safe Harbor</a>)<h4><center><br>BillTube Theme 2</p>(<a href="http://discord.gg/fwadWd9">Available Now</a>)</center></h4>');
+				$("#mainpage").prepend($("#chatwrap"));
+				$("#userlist").prepend("<div id='connected'></div>");
+				$("#userlisttoggle").append($("#usercount"));
+				$("#connected").append("<span id='connectedText'>&nbsp Logged in users</span>");
+				$("#main").after($("#drinkbarwrap"));
+				$("#nav-collapsible").append("<div id='headright'><div id='progbar'></div></div>");
+				$(".chat-area-title").after($("#currenttitle"));
 					$("#emotelistbtn").text("").removeClass("btn btn-sm btn-default").addClass("fas fa-image ch");
 					$("#fullscreenbtn").text("").addClass("fas fa-maximize").removeClass("btn btn-sm");
-					$("#loginform").detach().after("#headermenu");
-					$("#nav-collapsible").after($("#fullscreenbtn"));
-					$("#morebtn").after($("#videocontrols"));
-					$("#videocontrols").removeClass("pull-right");
-					$("#chatline").attr("placeholder", "Send a message");
-					$("#userlist").attr("style", "display: none;");
-					$("#main").after($("#motdrow"));
-					$("#motdwrap").append($(".visible-lg"));
-					$("#morebtn").after("<ul class='dropdown-menu'><li id='mediarefreshli'></li><li><button></button></li><li id='modli'></li><li><button></button></li></ul>");
-					$("#modli").append($("#modflair"));
-					$("#videoinfo").after($("#rightpane"));
-					$("#rightpane-inner").addClass("section");
+				$("#loginform").detach().after("#headermenu");
+				$("#nav-collapsible").after($("#fullscreenbtn"));
+				$("#morebtn").after($("#videocontrols"));
+				$("#videocontrols").removeClass("pull-right");
+				$("#chatline").attr("placeholder", "Send a message");
+				$("#userlist").attr("style", "display: none;");
+				$("#main").after($("#motdrow"));
+				$("#motdwrap").append($(".visible-lg"));
+				$("#morebtn").after("<ul class='dropdown-menu'><li id='mediarefreshli'></li><li><button></button></li><li id='modli'></li><li><button></button></li></ul>");
+				$("#modli").append($("#modflair"));
+				$("#videoinfo").after($("#rightpane"));
+				$("#rightpane-inner").addClass("section");
 					$("#mediarefresh").addClass("fas fa-sync OLB").removeClass("btn btn-sm btn-default").text("");
-					$("#userlist").addClass("animated animatedFadeInUp fadeInUp");
-					$("#queue").addClass("queue_sortable");
-					$("#rightpane").after("<div id='queuecontainer' class='section'><div class='textheader'><p id='upnext' class='sectionheader'>Up Next</p></div></div>");
-					$("#queuecontainer").append($("#queue"));
-					$("#upnext").append($("#plmeta")).after("<ul id='ploptions' class='menu hidden' role='menu'></ul>");
-					$("#ploptions").append($("#shuffleplaylist"), $("#clearplaylist"), $("#getplaylist"));
-					$("#upnext").before($("#qlockbtn"));
-					$('#queuecontainer').hover(function () {
-						$('#pllength').css({ 'opacity': '0.9', });
-					}, function () {
-						$('#pllength').css({ 'opacity': '0', });
-					});
-					if (window.CLIENT.rank >= 3) {
-						$("#ploptions").removeClass("hidden");
-					}
-					$("body").addClass("fluid");
-					$("#videowrap").addClass("col-lg-7 col-md-7");
-					$("#mediabuttons").append($("#showmediaurl"), $("#showsearch"), $("#showplaylistmanager"), $("#showcustomembed"));
-					$("#videowrap").removeClass("col-md-8 col-md-offset-2");
-					$("body").removeClass("synchtube");
-					$("#usertheme").attr("href", "/css/themes/slate.css");
-					$("#main").append($("#videowrap"));
-					$("#maincontain .nano-content").append($("#mainpage > .container"));
-					$("#videowrap").after($("#pollwrap"));
-					$("#mainpage").append("<div class='nano' id='maincontain'></div>");
-					$("#maincontain").append("<div class='nano-content'></div>");
-					$("#maincontain .nano-content").append($("#mainpage > .container-fluid"));
-					$('video').attr('crossOrigin', 'anonymous');
-					$("#usertheme").attr("href", "/css/themes/slate.css");
-					$("#maincontain .nano-content").append($("#mainpage > .container"));
-					$("#messagebuffer").after("<div class='nano'></div>");
-					$("#chatwrap .nano").append($("#messagebuffer"));
-					$('#chatwrap').children('.form-control').before("<input type='text' id='username'style='width:0;height:0;visibility:hidden;position:absolute;left:0;top:0' /><input type='password'style='width:0;height:0;visibility:hidden;position:absolute;left:0;top:0' />");
-					$('.form-control').attr('autocomplete', 'off');
-					$("nav .navbar-brand").attr('href', document.URL);
-					$("#mainpage").append("<style id='splitRatio'>@media (min-width: 992px) {#mainpage > .nano {width: 83%;} #chatwrap {width: 17%;}}</style>");
-					$("#maincontain").addClass("maincontain");
-					$("#sitefooter").append($("#logoutform"));
-					$("#logoutform").removeClass("pull-right");
-					$('#modflair').detach().prependTo('#headermenu');
-					$(".chat-area-header").after("<div class='nano'></div>");
-					$("#chatbox").append($("#chatline")).append($("#guestlogin"));
-					$(".chat-area-group").append($("#userlisttoggle"));
-					$("#chatline").attr('autocomplete', 'off');
-					$("#usercount").unbind();
-					$('#announcements').detach().appendTo('#sitefooter');
-					$('#videowrap-header').remove();
-					$('#resizewrap').remove();
-	
-					var EMOTELISTMODAL = $("#emotelist");
-					$("#emotelistbutton").click(function () {
-						EMOTELISTMODAL.modal();
-					});
-	
-					function welcomeBack() {
-						$('<div class="server-msg-reconnect">Welcome Guest, please consider creating an account.</div>').appendTo("#messagebuffer");
-						scrollChat();
-					}
+				$("#userlist").addClass("animated animatedFadeInUp fadeInUp");
+				$("#queue").addClass("queue_sortable");
+				$("#rightpane").after("<div id='queuecontainer' class='section'><div class='textheader'><p id='upnext' class='sectionheader'>Up Next</p></div></div>");
+				$("#queuecontainer").append($("#queue"));
+				$("#upnext").append($("#plmeta")).after("<ul id='ploptions' class='menu hidden' role='menu'></ul>");
+				$("#ploptions").append($("#shuffleplaylist"), $("#clearplaylist"), $("#getplaylist"));
+				$("#upnext").before($("#qlockbtn"));
+				$('#queuecontainer').hover(function () {
+					$('#pllength').css({ 'opacity': '0.9', });
+				}, function () {
+					$('#pllength').css({ 'opacity': '0', });
+				});
+				if (window.CLIENT.rank >= 3) {
+					$("#ploptions").removeClass("hidden");
+				}
+				$("body").addClass("fluid");
+				$("#videowrap").addClass("col-lg-7 col-md-7");
+				$("#mediabuttons").append($("#showmediaurl"), $("#showsearch"), $("#showplaylistmanager"), $("#showcustomembed"));
+				$("#videowrap").removeClass("col-md-8 col-md-offset-2");
+				$("body").removeClass("synchtube");
+				$("#usertheme").attr("href", "/css/themes/slate.css");
+				$("#main").append($("#videowrap"));
+				$("#maincontain .nano-content").append($("#mainpage > .container"));
+				$("#videowrap").after($("#pollwrap"));
+				$("#mainpage").append("<div class='nano' id='maincontain'></div>");
+				$("#maincontain").append("<div class='nano-content'></div>");
+				$("#maincontain .nano-content").append($("#mainpage > .container-fluid"));
+				$('video').attr('crossOrigin', 'anonymous');
+				$("#usertheme").attr("href", "/css/themes/slate.css");
+				$("#maincontain .nano-content").append($("#mainpage > .container"));
+				$("#messagebuffer").after("<div class='nano'></div>");
+				$("#chatwrap .nano").append($("#messagebuffer"));
+				$('#chatwrap').children('.form-control').before("<input type='text' id='username'style='width:0;height:0;visibility:hidden;position:absolute;left:0;top:0' /><input type='password'style='width:0;height:0;visibility:hidden;position:absolute;left:0;top:0' />");
+				$('.form-control').attr('autocomplete', 'off');
+				$("nav .navbar-brand").attr('href', document.URL);
+				$("#mainpage").append("<style id='splitRatio'>@media (min-width: 992px) {#mainpage > .nano {width: 83%;} #chatwrap {width: 17%;}}</style>");
+				$("#maincontain").addClass("maincontain");
+				$("#sitefooter").append($("#logoutform"));
+				$("#logoutform").removeClass("pull-right");
+				$('#modflair').detach().prependTo('#headermenu');
+				$(".chat-area-header").after("<div class='nano'></div>");
+				$("#chatbox").append($("#chatline")).append($("#guestlogin"));
+				$(".chat-area-group").append($("#userlisttoggle"));
+				$("#chatline").attr('autocomplete', 'off');
+				$("#usercount").unbind();
+				$('#announcements').detach().appendTo('#sitefooter');
+				$('#videowrap-header').remove();
+				$('#resizewrap').remove();
+
+				var EMOTELISTMODAL = $("#emotelist");
+				$("#emotelistbutton").click(function () {
+					EMOTELISTMODAL.modal();
+				});
+
+				function welcomeBack() {
+					$('<div class="server-msg-reconnect">Welcome Guest, please consider creating an account.</div>').appendTo("#messagebuffer");
+					scrollChat();
+				}
 					let KEYDOWN = true;
 					let MOUSEOVER = true;
-	
-					socket.on("login", function () {
-						if (CLIENT.rank === 0) {
-							$(window).on("mouseover", function () {
-								if (MOUSEOVER) {
+
+				socket.on("login", function () {
+					if (CLIENT.rank === 0) {
+						$(window).on("mouseover", function () {
+							if (MOUSEOVER) {
+								MOUSEOVER = false;
+								welcomeBack();
+								setTimeout(function () {
 									MOUSEOVER = false;
-									welcomeBack();
-									setTimeout(function () {
-										MOUSEOVER = false;
-									}, 1000);
-								}
-							});
-						}
-					});
+								}, 1000);
+							}
+						});
+					}
+				});
 
 					let BG_Dimmed;
-					// Dim the background
-					if (BG_Dimmed == "1") {
-						$("<style>")
-							.attr("type", "text/css")
-							.appendTo("#wrap")
-							.text(`
-	#wrap:before{background-color:rgba(0, 0, 0, 0.8);}`);
-					}
-					if ($('#usercount').length !== 0) {
+				// Dim the background
+				if (BG_Dimmed == "1") {
+					$("<style>")
+						.attr("type", "text/css")
+						.appendTo("#wrap")
+						.text(`
+#wrap:before{background-color:rgba(0, 0, 0, 0.8);}`);
+				}
+				if ($('#usercount').length !== 0) {
+					$('#usercount').text($('#usercount').text().replace('connected users', ' ').replace('connected user', ' '));
+					window.socket.on('usercount', function () {
 						$('#usercount').text($('#usercount').text().replace('connected users', ' ').replace('connected user', ' '));
-						window.socket.on('usercount', function () {
-							$('#usercount').text($('#usercount').text().replace('connected users', ' ').replace('connected user', ' '));
-							$('#usercount').text($('#usercount').text().replace('not connected', ' '));
-						});
-					}
-	
-					if ($('#currenttitle').length !== 0) {
+						$('#usercount').text($('#usercount').text().replace('not connected', ' '));
+					});
+				}
+
+				if ($('#currenttitle').length !== 0) {
+					$('#currenttitle').text($('#currenttitle').text().replace(/[.]/g, ' '));
+					$('#currenttitle').text($('#currenttitle').text().replace('Currently Playing:', ' ').replace('Currently Playing:', ' '));
+					window.socket.on('changeMedia', function () {
 						$('#currenttitle').text($('#currenttitle').text().replace(/[.]/g, ' '));
 						$('#currenttitle').text($('#currenttitle').text().replace('Currently Playing:', ' ').replace('Currently Playing:', ' '));
-						window.socket.on('changeMedia', function () {
-							$('#currenttitle').text($('#currenttitle').text().replace(/[.]/g, ' '));
-							$('#currenttitle').text($('#currenttitle').text().replace('Currently Playing:', ' ').replace('Currently Playing:', ' '));
-						});
-					}
-					DROPBOX = 'https://dl.dropboxusercontent.com/s/';
-					$(document).ready(function () {
-						$("video").bind("contextmenu", function () {
-							return false;
-						});
 					});
-	
-	
-					window.socket.on("changeMedia", function () {
-						var myVideo = document.getElementById("ytapiplayer");
-						if (myVideo.addEventListener) {
-							myVideo.addEventListener('contextmenu', function (e) {
-								e.preventDefault();
-							}, false);
-						} else {
-							myVideo.attachEvent('oncontextmenu', function () {
-								window.event.returnValue = false;
-							});
-						}
+				}
+				DROPBOX = 'https://dl.dropboxusercontent.com/s/';
+				$(document).ready(function () {
+					$("video").bind("contextmenu", function () {
+						return false;
 					});
-	
+				});
+
+
+				window.socket.on("changeMedia", function () {
 					var myVideo = document.getElementById("ytapiplayer");
 					if (myVideo.addEventListener) {
 						myVideo.addEventListener('contextmenu', function (e) {
@@ -463,113 +453,125 @@ function (module, exports, __webpack_require__) {
 							window.event.returnValue = false;
 						});
 					}
-					$("#mediaurl").on("paste", function () {
-						setTimeout(function () {
-							$("#mediaurl")[0].value = $("#mediaurl")[0].value.replace("//www.dropbox.com/s/", "//dl.dropbox.com/s/").replace("?dl=0", "").replace("?a=view", "");
-						}, 1);
-						setTimeout(function () {
-							if ($("#addfromurl-title-val").length !== 0) {
-								var mediaUrl = decodeURI($("#mediaurl")[0].value).split("/");
-								mediaUrl = mediaUrl[mediaUrl.length - 1].split("?")[0].split(".");
-								var mediaTitle = "";
-								for (i = 0; i < mediaUrl.length - 1; i++) {
-									mediaTitle += mediaUrl[i] + ".";
-								}
-								mediaTitle = mediaTitle.substring(0, mediaTitle.length - 1).replace(/[.]/g, " ").replace("HDTV", "").replace("720p", "").replace("1080p", "").replace("-tNe", "").replace("x265", "").replace("x264", "").replace("q22", "").replace("Joy", "").replace("(", "").replace(")", "");
-								$("#addfromurl-title-val")[0].value = mediaTitle;
-							}
-						}, 250);
+				});
+
+				var myVideo = document.getElementById("ytapiplayer");
+				if (myVideo.addEventListener) {
+					myVideo.addEventListener('contextmenu', function (e) {
+						e.preventDefault();
+					}, false);
+				} else {
+					myVideo.attachEvent('oncontextmenu', function () {
+						window.event.returnValue = false;
 					});
-	
-					location.href.charAt(location.href.length - 1) === '#' && chatOnly();
-					_timeVIDEBLU = { raw: 0, ofs: 0, paused: false };//Define time object for ss7's video time display plugin
-					currentmedia = { istemp: false, location: 0, uid: 0, id: 0, seconds: 0, length: 0 };
-					playlistinfo = { length: 0 };
-					issplit = false;
-					var trnsdelay = 400;//Defines trnsdelay, transition time (in ms)
-	
-					if (typeof (_changeMediaVIDEBLU) == 'undefined') { _changeMediaVIDEBLU = Callbacks.changeMedia; }//Creates global variable _changeMediaVIDEBLU and sets it equal to old changeMedia() in Callbacks.js
-					if (typeof (_playlistVIDEBLU) == 'undefined') { _playlistVIDEBLU = Callbacks.playlist; }
-					if (typeof (_queueVIDEBLU) == 'undefined') { _queueVIDEBLU = Callbacks.queue; }
-					if (typeof (_mediaupdateVIDEBLU) == 'undefined') { _mediaUpdateVIDEBLU = Callbacks.mediaUpdate; }
-	
-					Callbacks.queue = function (data) {//currently for debugging purposes only. Doesn't do anything.
-						_queueVIDEBLU(data);
-						console.log("Called Callbacks.queue");
-						console.log(data);
-					}
-	
-					function requeue(data) {
-						/*for (var i = 0; i <= data.length - 1; i++) {//find information of current video in playlist
-							var e = data[i];
-							if (e.media.id == currentmedia.id) {
-								currentmedia.uid = e.uid;
-								currentmedia.ispermanent = e.temp;
-								currentmedia.location = i;
-							}
-						}*/
-						var _playlist = [];
-						$("#queue > .queue_entry").each(function () {
-							var data = $(this).data();
-							//var addedby = $(this).attr("title").match(/: (\w+)$/)[1];
-							_playlist.push({ uid: data.uid, media: data.media, temp: data.temp });
-						});
-					}
-	
-					//function changeMedia2(){
-					Callbacks.changeMedia = function (data) {//Adds to the old changeMedia() in Callbacks.js, which is called when the media changes.
-						_changeMediaVIDEBLU(data);//call the old changeMedia() function stored.
-						$("#currenttitle").text(data.title);//change the text of #currenttitle to data.title (gets rid of "Currently Playing: " in video title)
-						$("#ss7time").attr("title", data.duration);//gets time of current video
-						currentmedia.length = data.duration;
-						currentmedia.id = data.id;
-						currentmedia.seconds = data.seconds;
-						var title = $("#queue .queue_active").attr("title");
-						$("#addedby").text(title.match(/(?:Added by: ){1}(.*)/)[1]);
-					}
-					//}
-					//changeMedia2()
-	
-					//function mediaUpdate2() {
-					Callbacks.mediaUpdate = function (data) {//Adds to the old mediaUpdate() in Callbacks.js, which is called every couple seconds.
-						_mediaUpdateVIDEBLU(data);//call the old mediaUpdate function stored.
-						_timeVIDEBLU.paused = data.paused;//stores data.paused in another variable. (Is video paused?)
-						_timeVIDEBLU.raw = Math.max(data.currentTime, 0);//stores the current video time position as _timeVIDEBLU.raw, to be used in setvideotime()
-						_timeVIDEBLU.ofs = _timeVIDEBLU.raw - (new Date()).getTime() / 1000;//stores time offset, to keep the timer going between media updates
-					}
-					//}
-					//mediaUpdate2();
-					setvideotime = function () { var e = _timeVIDEBLU.paused ? _timeVIDEBLU.raw : (new Date).getTime() / 1e3 + _timeVIDEBLU.ofs, t = Math.round(100 * e / currentmedia.seconds); t > 100 && (t = 0), $("#progbar").css("width", t + "%"), setTimeout(setvideotime, 1e3 * (Math.round(e) + 1 - e)); var i = (e = Math.round(e)) % 60, s = (e = Math.floor(e / 60)) % 60, o = Math.floor(e / 60); i < 10 && (i = "0" + i), s < 10 && (s = "0" + s), o < 10 && (o = "0" + o), currentmedia.seconds > 3598 ? $("#ss7time").text(o + ":" + s + ":" + i) : 0 == o ? $("#ss7time").text(s + ":" + i) : "--:--" == currentmedia.length && $("#ss7time").text("Live") }, setvideotime();
-					$("#drinkbar").click(function () {
-						$("#drinkcount").remove();
-					});
-	
-					$(document).ready(function () {
-						$("video").bind("contextmenu", function () {
-							return false;
-						});
-					});
-					scrollbtn = $('<button id="scroll-btn" class="btn btn-sm btn-default" title="Scroll to current item" />')
-						.append('<span class="glyphicon glyphicon-hand-right" />')
-						.prependTo("#ploptions")
-						.on("click", function () {
-							scrollQueue();
-						});
-	
-					var LOADED = (typeof LOADED === "undefined") ? false : true;
-					LOADED ? location.reload() : '';
-					var myElement = document.querySelector("#videowrap");
-					myElement.style.display = "block";
-					$("body").addClass('fluid');
-					var field = document.querySelectorAll('[data-persist]')
-					for (i = 0; i < field.length; i++) {
-						var stored = localStorage.getItem(field[i].getAttribute('data-persist'))
-						if (stored) field[i].value = stored
-						field[i].addEventListener('input', function () {
-							localStorage.setItem(this.getAttribute('data-persist'), this.value)
-						})
-					}
 				}
+				$("#mediaurl").on("paste", function () {
+					setTimeout(function () {
+						$("#mediaurl")[0].value = $("#mediaurl")[0].value.replace("//www.dropbox.com/s/", "//dl.dropbox.com/s/").replace("?dl=0", "").replace("?a=view", "");
+					}, 1);
+					setTimeout(function () {
+						if ($("#addfromurl-title-val").length !== 0) {
+							var mediaUrl = decodeURI($("#mediaurl")[0].value).split("/");
+							mediaUrl = mediaUrl[mediaUrl.length - 1].split("?")[0].split(".");
+							var mediaTitle = "";
+							for (i = 0; i < mediaUrl.length - 1; i++) {
+								mediaTitle += mediaUrl[i] + ".";
+							}
+							mediaTitle = mediaTitle.substring(0, mediaTitle.length - 1).replace(/[.]/g, " ").replace("HDTV", "").replace("720p", "").replace("1080p", "").replace("-tNe", "").replace("x265", "").replace("x264", "").replace("q22", "").replace("Joy", "").replace("(", "").replace(")", "");
+							$("#addfromurl-title-val")[0].value = mediaTitle;
+						}
+					}, 250);
+				});
+
+				location.href.charAt(location.href.length - 1) === '#' && chatOnly();
+				_timeVIDEBLU = { raw: 0, ofs: 0, paused: false };//Define time object for ss7's video time display plugin
+				currentmedia = { istemp: false, location: 0, uid: 0, id: 0, seconds: 0, length: 0 };
+				playlistinfo = { length: 0 };
+				issplit = false;
+				var trnsdelay = 400;//Defines trnsdelay, transition time (in ms)
+
+				if (typeof (_changeMediaVIDEBLU) == 'undefined') { _changeMediaVIDEBLU = Callbacks.changeMedia; }//Creates global variable _changeMediaVIDEBLU and sets it equal to old changeMedia() in Callbacks.js
+				if (typeof (_playlistVIDEBLU) == 'undefined') { _playlistVIDEBLU = Callbacks.playlist; }
+				if (typeof (_queueVIDEBLU) == 'undefined') { _queueVIDEBLU = Callbacks.queue; }
+				if (typeof (_mediaupdateVIDEBLU) == 'undefined') { _mediaUpdateVIDEBLU = Callbacks.mediaUpdate; }
+
+				Callbacks.queue = function (data) {//currently for debugging purposes only. Doesn't do anything.
+					_queueVIDEBLU(data);
+					console.log("Called Callbacks.queue");
+					console.log(data);
+				}
+
+				function requeue(data) {
+					/*for (var i = 0; i <= data.length - 1; i++) {//find information of current video in playlist
+						var e = data[i];
+						if (e.media.id == currentmedia.id) {
+							currentmedia.uid = e.uid;
+							currentmedia.ispermanent = e.temp;
+							currentmedia.location = i;
+						}
+					}*/
+					var _playlist = [];
+					$("#queue > .queue_entry").each(function () {
+						var data = $(this).data();
+						//var addedby = $(this).attr("title").match(/: (\w+)$/)[1];
+						_playlist.push({ uid: data.uid, media: data.media, temp: data.temp });
+					});
+				}
+
+				//function changeMedia2(){
+				Callbacks.changeMedia = function (data) {//Adds to the old changeMedia() in Callbacks.js, which is called when the media changes.
+					_changeMediaVIDEBLU(data);//call the old changeMedia() function stored.
+					$("#currenttitle").text(data.title);//change the text of #currenttitle to data.title (gets rid of "Currently Playing: " in video title)
+					$("#ss7time").attr("title", data.duration);//gets time of current video
+					currentmedia.length = data.duration;
+					currentmedia.id = data.id;
+					currentmedia.seconds = data.seconds;
+					var title = $("#queue .queue_active").attr("title");
+					$("#addedby").text(title.match(/(?:Added by: ){1}(.*)/)[1]);
+				}
+				//}
+				//changeMedia2()
+
+				//function mediaUpdate2() {
+				Callbacks.mediaUpdate = function (data) {//Adds to the old mediaUpdate() in Callbacks.js, which is called every couple seconds.
+					_mediaUpdateVIDEBLU(data);//call the old mediaUpdate function stored.
+					_timeVIDEBLU.paused = data.paused;//stores data.paused in another variable. (Is video paused?)
+					_timeVIDEBLU.raw = Math.max(data.currentTime, 0);//stores the current video time position as _timeVIDEBLU.raw, to be used in setvideotime()
+					_timeVIDEBLU.ofs = _timeVIDEBLU.raw - (new Date()).getTime() / 1000;//stores time offset, to keep the timer going between media updates
+				}
+				//}
+				//mediaUpdate2();
+				setvideotime = function () { var e = _timeVIDEBLU.paused ? _timeVIDEBLU.raw : (new Date).getTime() / 1e3 + _timeVIDEBLU.ofs, t = Math.round(100 * e / currentmedia.seconds); t > 100 && (t = 0), $("#progbar").css("width", t + "%"), setTimeout(setvideotime, 1e3 * (Math.round(e) + 1 - e)); var i = (e = Math.round(e)) % 60, s = (e = Math.floor(e / 60)) % 60, o = Math.floor(e / 60); i < 10 && (i = "0" + i), s < 10 && (s = "0" + s), o < 10 && (o = "0" + o), currentmedia.seconds > 3598 ? $("#ss7time").text(o + ":" + s + ":" + i) : 0 == o ? $("#ss7time").text(s + ":" + i) : "--:--" == currentmedia.length && $("#ss7time").text("Live") }, setvideotime();
+				$("#drinkbar").click(function () {
+					$("#drinkcount").remove();
+				});
+
+				$(document).ready(function () {
+					$("video").bind("contextmenu", function () {
+						return false;
+					});
+				});
+				scrollbtn = $('<button id="scroll-btn" class="btn btn-sm btn-default" title="Scroll to current item" />')
+					.append('<span class="glyphicon glyphicon-hand-right" />')
+					.prependTo("#ploptions")
+					.on("click", function () {
+						scrollQueue();
+					});
+
+				var LOADED = (typeof LOADED === "undefined") ? false : true;
+				LOADED ? location.reload() : '';
+				var myElement = document.querySelector("#videowrap");
+				myElement.style.display = "block";
+				$("body").addClass('fluid');
+				var field = document.querySelectorAll('[data-persist]')
+				for (i = 0; i < field.length; i++) {
+					var stored = localStorage.getItem(field[i].getAttribute('data-persist'))
+					if (stored) field[i].value = stored
+					field[i].addEventListener('input', function () {
+						localStorage.setItem(this.getAttribute('data-persist'), this.value)
+					})
+				}
+			}
 			})();
 			
 			//Playlist Search bar module by Bill
@@ -1058,7 +1060,7 @@ function (module, exports) {
 		});
 
 		bumplastbtn = $('<button title="Bump last added video" id="bumplast-btn" class="btn btn-default fas fa-redo"></button>')
-			.appendTo(ploptions)
+			.appendTo("#ploptions")
 			.on("click", function () {
 				len = $("#queue").children().length;
 				uid = $("#queue .queue_entry:nth-child(" + len + ")").data("uid");
@@ -1066,7 +1068,7 @@ function (module, exports) {
 			});
 
 		deletelastbtn = $('<button title="Delete last added video" id="deletelast-btn" class="btn btn-default fas fa-trash-arrow-up"></button>')
-			.appendTo(ploptions)
+			.appendTo("#ploptions")
 			.on("click", function () {
 				if (confirm('Are you sure to delete last item?')) {
 					len = $("#queue").children().length;
@@ -1074,8 +1076,6 @@ function (module, exports) {
 					socket.emit("delete", uid);
 				}
 			});
-
-		/***/
 },
 /* 12 */
 /***/ function (module, exports, __webpack_require__) {
