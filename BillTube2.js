@@ -434,13 +434,12 @@ function (module, exports, __webpack_require__) {
 						$('#currenttitle').text($('#currenttitle').text().replace('Currently Playing:', ' ').replace('Currently Playing:', ' '));
 					});
 				}
-				DROPBOX = 'https://dl.dropboxusercontent.com/s/';
+				let DROPBOX = 'https://dl.dropboxusercontent.com/s/';
 				$(document).ready(function () {
 					$("video").bind("contextmenu", function () {
 						return false;
 					});
 				});
-
 
 				window.socket.on("changeMedia", function () {
 					var myVideo = document.getElementById("ytapiplayer");
@@ -1067,7 +1066,7 @@ function (module, exports) {
 				socket.emit("moveMedia", { from: uid, after: PL_CURRENT });
 			});
 
-		deletelastbtn = $('<button title="Delete last added video" id="deletelast-btn" class="btn btn-default fas fa-trash-arrow-up"></button>')
+		let deletelastbtn = $('<button title="Delete last added video" id="deletelast-btn" class="btn btn-default fas fa-trash-arrow-up"></button>')
 			.appendTo("#ploptions")
 			.on("click", function () {
 				if (confirm('Are you sure to delete last item?')) {
