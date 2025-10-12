@@ -249,8 +249,8 @@ function (module, exports, __webpack_require__) {
 				$("#main").after($("#chatwrap"));
 					try {
 						await loadResources([
-							{ type: 'css', href: '//dl.dropbox.com/s/sjb7rw59p0qnx6a/mobile.css' },
-							{ type: 'js', src: '//dl.dropbox.com/s/5h0liiwcqqdfbh0/mobile.js' },
+							{ type: 'css', href: `${CDN_URL}${DEV_BRANCH}/src/css/mobile.css` },
+							{ type: 'js', src: `${CDN_URL}${DEV_BRANCH}/src/js/mobile.js` },
 						]);
 					} catch (err) {
 						console.error('Failed to load resource:', err.message, err);
@@ -260,8 +260,8 @@ function (module, exports, __webpack_require__) {
 				try {
 					await loadResources([
 						{ type: 'css', href: `${CDN_URL}${DEV_BRANCH}/src/css/base.css` },
-						{ type: 'css', href: 'https://unpkg.com/@videojs/themes@1/dist/city/index.css' },
-						{ type: 'js', src: '//dl.dropbox.com/s/m5kd8r2slhnfu1c/notifications.js' },
+						{ type: 'css', href: `${CDN_URL}${DEV_BRANCH}/src/css/city_theme.css` },
+						{ type: 'js', src: `${CDN_URL}${DEV_BRANCH}/src/assets/notifications.js` },
 						{ type: 'js', src: `${CDN_URL}${DEV_BRANCH}/src/assets/avatars.js` },
 					]);
 				} catch (err) {
@@ -1059,7 +1059,7 @@ function (module, exports) {
 			});
 		});
 
-		bumplastbtn = $('<button title="Bump last added video" id="bumplast-btn" class="btn btn-default fas fa-redo"></button>')
+		let bumplastbtn = $('<button title="Bump last added video" id="bumplast-btn" class="btn btn-default fas fa-redo"></button>')
 			.appendTo("#ploptions")
 			.on("click", function () {
 				len = $("#queue").children().length;
