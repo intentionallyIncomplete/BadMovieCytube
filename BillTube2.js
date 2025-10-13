@@ -17,8 +17,8 @@ import { createWebpackRuntime } from './src/assets/webpackRuntime.js';
 import { CytubeEnhancedStorage } from './src/core/CytubeEnhancedStorage.js';
 import './src/assets/icons.js';
 
-const CDN_URL = 'https://cdn.jsdelivr.net/gh/intentionallyIncomplete/BadMovieCytube';
-const DEV_BRANCH = '@dev'
+const CDN_URL = process.env.CDN_URL;
+const isDev = process.env.DEV_BRANCH === '';
 const vplayer = initializePlayer();
 
 window.CytubeEnhancedStorage = CytubeEnhancedStorage;
