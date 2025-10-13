@@ -11,7 +11,6 @@
 import 'lazysizes';
 import 'lazysizes/plugins/unveilhooks/ls.unveilhooks'; // supports data-bg, data-poster, non-img nodes
 import './src/js/CytubeEnhancedHelpers/lazysizesHooks.js';
-import { loadResources } from './src/js/CytubeEnhancedHelpers/loadResources.js';
 import { initializePlayer, videofix } from './src/player/playerManager.js';
 import { createWebpackRuntime } from './src/assets/webpackRuntime.js';
 import { CytubeEnhancedStorage } from './src/core/CytubeEnhancedStorage.js';
@@ -261,20 +260,6 @@ function (module, exports, __webpack_require__) {
 				let KEYDOWN = true;
 				let MOUSEOVER = true;
 
-				socket.on("login", function () {
-					if (CLIENT.rank === 0) {
-						$(window).on("mouseover", function () {
-							if (MOUSEOVER) {
-								MOUSEOVER = false;
-								welcomeBack();
-								setTimeout(function () {
-									MOUSEOVER = false;
-								}, 1000);
-							}
-						});
-					}
-				});
-
 				let BG_Dimmed;
 				// Dim the background
 				if (BG_Dimmed == "1") {
@@ -305,19 +290,6 @@ function (module, exports, __webpack_require__) {
 					$("video").bind("contextmenu", function () {
 						return false;
 					});
-				});
-
-				window.socket.on("changeMedia", function () {
-					var myVideo = document.getElementById("ytapiplayer");
-					if (myVideo.addEventListener) {
-						myVideo.addEventListener('contextmenu', function (e) {
-							e.preventDefault();
-						}, false);
-					} else {
-						myVideo.attachEvent('oncontextmenu', function () {
-							window.event.returnValue = false;
-						});
-					}
 				});
 
 				var myVideo = document.getElementById("ytapiplayer");
@@ -360,52 +332,14 @@ function (module, exports, __webpack_require__) {
 				if (typeof (_queueVIDEBLU) == 'undefined') { _queueVIDEBLU = Callbacks.queue; }
 				if (typeof (_mediaupdateVIDEBLU) == 'undefined') { _mediaUpdateVIDEBLU = Callbacks.mediaUpdate; }
 
-				Callbacks.queue = function (data) {//currently for debugging purposes only. Doesn't do anything.
-					_queueVIDEBLU(data);
-					console.log("Called Callbacks.queue");
-					console.log(data);
-				}
-
 				function requeue(data) {
-					/*for (var i = 0; i <= data.length - 1; i++) {//find information of current video in playlist
-						var e = data[i];
-						if (e.media.id == currentmedia.id) {
-							currentmedia.uid = e.uid;
-							currentmedia.ispermanent = e.temp;
-							currentmedia.location = i;
-						}
-					}*/
 					var _playlist = [];
 					$("#queue > .queue_entry").each(function () {
 						var data = $(this).data();
-						//var addedby = $(this).attr("title").match(/: (\w+)$/)[1];
 						_playlist.push({ uid: data.uid, media: data.media, temp: data.temp });
 					});
 				}
 
-				//function changeMedia2(){
-				Callbacks.changeMedia = function (data) {//Adds to the old changeMedia() in Callbacks.js, which is called when the media changes.
-					_changeMediaVIDEBLU(data);//call the old changeMedia() function stored.
-					$("#currenttitle").text(data.title);//change the text of #currenttitle to data.title (gets rid of "Currently Playing: " in video title)
-					$("#ss7time").attr("title", data.duration);//gets time of current video
-					currentmedia.length = data.duration;
-					currentmedia.id = data.id;
-					currentmedia.seconds = data.seconds;
-					var title = $("#queue .queue_active").attr("title");
-					$("#addedby").text(title.match(/(?:Added by: ){1}(.*)/)[1]);
-				}
-				//}
-				//changeMedia2()
-
-				//function mediaUpdate2() {
-				Callbacks.mediaUpdate = function (data) {//Adds to the old mediaUpdate() in Callbacks.js, which is called every couple seconds.
-					_mediaUpdateVIDEBLU(data);//call the old mediaUpdate function stored.
-					_timeVIDEBLU.paused = data.paused;//stores data.paused in another variable. (Is video paused?)
-					_timeVIDEBLU.raw = Math.max(data.currentTime, 0);//stores the current video time position as _timeVIDEBLU.raw, to be used in setvideotime()
-					_timeVIDEBLU.ofs = _timeVIDEBLU.raw - (new Date()).getTime() / 1000;//stores time offset, to keep the timer going between media updates
-				}
-				//}
-				//mediaUpdate2();
 				setvideotime = function () { var e = _timeVIDEBLU.paused ? _timeVIDEBLU.raw : (new Date).getTime() / 1e3 + _timeVIDEBLU.ofs, t = Math.round(100 * e / currentmedia.seconds); t > 100 && (t = 0), $("#progbar").css("width", t + "%"), setTimeout(setvideotime, 1e3 * (Math.round(e) + 1 - e)); var i = (e = Math.round(e)) % 60, s = (e = Math.floor(e / 60)) % 60, o = Math.floor(e / 60); i < 10 && (i = "0" + i), s < 10 && (s = "0" + s), o < 10 && (o = "0" + o), currentmedia.seconds > 3598 ? $("#ss7time").text(o + ":" + s + ":" + i) : 0 == o ? $("#ss7time").text(s + ":" + i) : "--:--" == currentmedia.length && $("#ss7time").text("Live") }, setvideotime();
 				$("#drinkbar").click(function () {
 					$("#drinkcount").remove();
@@ -470,13 +404,6 @@ function (module, exports, __webpack_require__) {
 				});
 			});
 
-			socket.on('setAFK', scrollChat);
-			socket.on('chatMsg', scrollChat);
-			socket.on('chatMsg', function (data) {
-				if (data.msg.indexOf('<a') != -1 || data.msg.indexOf('<img') != -1) {
-					setTimeout(scrollChat, 500);
-				}
-			});
 			function scrollToBottom() {
 				document.getElementById('messagebuffer').scrollTo(0, 10000);
 			}
@@ -487,15 +414,6 @@ function (module, exports, __webpack_require__) {
 			$("#maincontain").addClass("Overlay-Scrollbars");
 			$("#maincontain").addClass("leftcontent");
 			$("#chatwrap").addClass("rightcontent");
-
-			socket.on("closePoll", function () {
-				$("#closepolls").remove();
-				$('.well.muted').unbind().insertAfter("#navtabs");
-				$('<button class="btn btn-xs closepolls" id="closepolls">Clear All Polls</button>').insertBefore('.well.muted:first').click(function () {
-					$('.well.muted').remove();
-					$("#closepolls").remove();
-				});
-			});
 			$('#nav-collapsible a:contains("Layout")').remove();
 			$('#us-general > form').hide();
 			$("#us-general > form").after('<div id="btscreen"><div class="card-frame"><div class="left"><div class="billtube">BillTube Theme 2.0 - Refactored</div></div></div></div>');
@@ -2749,8 +2667,7 @@ function (module, exports) {
 			};
 			settings = $.extend({}, defaultSettings, settings);
 
-
-			if (UI_ChannelList == "1") {
+			if (process.env.UI_ChannelList == "1") {
 
 				$('head').append("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css' />");
 				$('head').append("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css' />");
