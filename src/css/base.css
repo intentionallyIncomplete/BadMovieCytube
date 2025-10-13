@@ -2262,7 +2262,8 @@ span.timestamp.server-whisper.show {
     border-bottom: 1px solid hsl(0, 0%, 100%);
 }
 
-#chatheader i:hover {}
+#chatheader i:hover {
+
 }
 
 /* Below Video */
@@ -3087,23 +3088,15 @@ div#emote_suggest {
 .motdbutton {}
 
 .motdselected {
-    /* display: inline-block; */
     font-weight: 500;
-    /* text-decoration: none; */
-    /* border-radius: 4px; */
-    /* margin-right: 12px; */
-    /* color: white; */
     border: 1px solid white;
-    /* padding: 16px 30px; */
-    /* background: #ffffff0f; */
-    /* color: white; */
 }
 
 #VideoOverlay {
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.94) 0, rgba(0, 0, 0, .35) 50%, transparent);
     -moz-transition: opacity 1000ms ease;
     transition: opacity 1000ms ease;
-    top: 0px;
+    bottom: 0px;
     display: block;
     position: absolute;
     width: 100%;
